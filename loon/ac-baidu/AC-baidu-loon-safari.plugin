@@ -1,23 +1,33 @@
 #!name=AC百度搜索优化
-#!desc=适用于 Safari 的 Loon 搜索结果优化插件，支持隐藏广告、显示网站图标、净化跳转链接，并可在插件设置中切换居中、左侧、双列、三列、四列等布局。打开 ac_debug 后，匹配页面会显示调试提示。
+#!desc=适用于 Safari 的 Loon 搜索结果优化插件。支持隐藏广告、净化跳转链接、显示网站图标、单双列布局、右侧栏、编号、去下划线、暗黑主题、拦截按钮、自动翻页和自定义 CSS。
 #!author=AC / Codex
 #!homepage=https://github.com/langren1353/GM_script
 #!date=2026-06-30
 #!icon=https://ae01.alicdn.com/kf/Hac1a58055c5047cdb91349e91aa208d5k.jpg
-#!select = ac_layout,two,center,left,three,four,off
-#!select = ac_ads,on,off
-#!select = ac_redirect,on,off
-#!select = ac_favicon,on,off
-#!select = ac_debug,off,on
+
+[Argument]
+ac_layout = select,"双列","单列居中","单列靠左","三列","四列","关闭布局",tag=结果布局,desc=选择搜索结果的显示布局
+ac_ads = switch,true,tag=隐藏广告,desc=隐藏搜索结果中的广告和推广内容
+ac_redirect = switch,true,tag=净化跳转链接,desc=尽量把搜索结果中转链接还原为直链
+ac_favicon = switch,true,tag=显示网站图标,desc=在搜索结果标题前显示网站图标
+ac_right = switch,true,tag=显示右侧栏,desc=关闭后隐藏搜索页面右侧栏
+ac_counter = switch,false,tag=显示结果编号,desc=给搜索结果卡片显示序号
+ac_underline = switch,true,tag=移除文字下划线,desc=移除搜索结果链接下划线
+ac_dark = switch,false,tag=暗黑主题,desc=给搜索结果页注入暗色样式
+ac_block_button = switch,false,tag=显示拦截按钮,desc=在搜索结果上显示拦截按钮
+ac_hide_blocked = switch,true,tag=拦截后隐藏,desc=拦截某个站点后自动隐藏该站点结果
+ac_autopage = switch,false,tag=自动翻页,desc=滚动到底部时尝试自动加载下一页
+ac_custom_css = input,"",tag=自定义CSS,desc=填写额外注入的 CSS 代码，可留空
+ac_debug = switch,false,tag=调试提示,desc=匹配页面时显示注入提示并发送通知
 
 [Script]
-http-response ^https?:\/\/(ipv6|www|www1|m|xueshu)\.baidu\.com\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,tag=ACBaiduLite_Baidu
-http-response ^https?:\/\/www\.so\.com\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,tag=ACBaiduLite_Haosou
-http-response ^https?:\/\/([^\/]+\.)?bing\.com\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,tag=ACBaiduLite_Bing
-http-response ^https?:\/\/encrypted\.google\.[^\/]+\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,tag=ACBaiduLite_GoogleEncrypted
-http-response ^https?:\/\/([^\/]+\.)?google\.[^\/]+\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,tag=ACBaiduLite_Google
-http-response ^https?:\/\/([^\/]+\.)?duckduckgo\.com\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,tag=ACBaiduLite_DuckDuckGo
-http-response ^https?:\/\/([^\/]+\.)?dogedoge\.com\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,tag=ACBaiduLite_DogeDoge
+http-response ^https?:\/\/(ipv6|www|www1|m|xueshu)\.baidu\.com\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,argument=[{ac_layout},{ac_ads},{ac_redirect},{ac_favicon},{ac_right},{ac_counter},{ac_underline},{ac_dark},{ac_block_button},{ac_hide_blocked},{ac_autopage},{ac_custom_css},{ac_debug}],tag=AC百度_百度
+http-response ^https?:\/\/www\.so\.com\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,argument=[{ac_layout},{ac_ads},{ac_redirect},{ac_favicon},{ac_right},{ac_counter},{ac_underline},{ac_dark},{ac_block_button},{ac_hide_blocked},{ac_autopage},{ac_custom_css},{ac_debug}],tag=AC百度_360搜索
+http-response ^https?:\/\/([^\/]+\.)?bing\.com\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,argument=[{ac_layout},{ac_ads},{ac_redirect},{ac_favicon},{ac_right},{ac_counter},{ac_underline},{ac_dark},{ac_block_button},{ac_hide_blocked},{ac_autopage},{ac_custom_css},{ac_debug}],tag=AC百度_Bing
+http-response ^https?:\/\/encrypted\.google\.[^\/]+\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,argument=[{ac_layout},{ac_ads},{ac_redirect},{ac_favicon},{ac_right},{ac_counter},{ac_underline},{ac_dark},{ac_block_button},{ac_hide_blocked},{ac_autopage},{ac_custom_css},{ac_debug}],tag=AC百度_Google加密
+http-response ^https?:\/\/([^\/]+\.)?google\.[^\/]+\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,argument=[{ac_layout},{ac_ads},{ac_redirect},{ac_favicon},{ac_right},{ac_counter},{ac_underline},{ac_dark},{ac_block_button},{ac_hide_blocked},{ac_autopage},{ac_custom_css},{ac_debug}],tag=AC百度_Google
+http-response ^https?:\/\/([^\/]+\.)?duckduckgo\.com\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,argument=[{ac_layout},{ac_ads},{ac_redirect},{ac_favicon},{ac_right},{ac_counter},{ac_underline},{ac_dark},{ac_block_button},{ac_hide_blocked},{ac_autopage},{ac_custom_css},{ac_debug}],tag=AC百度_DuckDuckGo
+http-response ^https?:\/\/([^\/]+\.)?dogedoge\.com\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,argument=[{ac_layout},{ac_ads},{ac_redirect},{ac_favicon},{ac_right},{ac_counter},{ac_underline},{ac_dark},{ac_block_button},{ac_hide_blocked},{ac_autopage},{ac_custom_css},{ac_debug}],tag=AC百度_DogeDoge
 
 [MITM]
 hostname=ipv6.baidu.com,www.baidu.com,www1.baidu.com,m.baidu.com,xueshu.baidu.com,www.so.com,bing.com,*.bing.com,encrypted.google.com,google.com,*.google.com,google.com.hk,*.google.com.hk,google.com.jp,*.google.com.jp,google.com.tw,*.google.com.tw,google.co.jp,*.google.co.jp,google.co.uk,*.google.co.uk,duckduckgo.com,*.duckduckgo.com,dogedoge.com,*.dogedoge.com
