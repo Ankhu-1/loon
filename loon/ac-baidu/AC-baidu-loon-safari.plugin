@@ -1,5 +1,5 @@
-#!name=AC-baidu Safari Lite
-#!desc=Safari-first lightweight AC-baidu plugin. Directly injects CSS/JS for ads hiding, favicon and layout. Turn ac_debug on to see a page badge when matched.
+#!name=AC百度搜索优化
+#!desc=适用于 Safari 的 Loon 搜索结果优化插件，支持隐藏广告、显示网站图标、净化跳转链接，并可在插件设置中切换居中、左侧、双列、三列、四列等布局。打开 ac_debug 后，匹配页面会显示调试提示。
 #!author=AC / Codex
 #!homepage=https://github.com/langren1353/GM_script
 #!date=2026-06-30
