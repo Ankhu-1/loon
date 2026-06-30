@@ -28,7 +28,7 @@
 | 京东开屏素材拦截 | 拦截抓包中发现的京东 iOS 开屏竖图素材，不使用脚本。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/%E4%BA%AC%E4%B8%9C%E5%BC%80%E5%B1%8F%E7%B4%A0%E6%9D%90%E6%8B%A6%E6%88%AA.lpx) | 轻量版，已被京东开屏广告增强拦截覆盖。 |
 | 拼多多全局弹窗拦截 | 清空拼多多全局弹窗接口返回，尽量不影响商品、订单和支付功能。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E5%85%A8%E5%B1%80%E5%BC%B9%E7%AA%97%E6%8B%A6%E6%88%AA.lpx) | 独立插件。 |
 | QQ聊天核心精简 | 保留 QQ 原本聊天功能，拦截 QQ 空间广告、访客装饰物料、会员装扮补丁和游戏中心物料。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/QQ%E8%81%8A%E5%A4%A9%E6%A0%B8%E5%BF%83%E7%B2%BE%E7%AE%80.lpx) | 独立插件。 |
-| 铁路12306广告拦截 | 拦截铁路 12306 首页广告初始化、运营广告类型和广告域名，保留车票查询、下单和推送功能。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/%E9%93%81%E8%B7%AF12306%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA.lpx) | 独立插件。 |
+| 铁路12306广告拦截 | 秒回铁路 12306 开屏广告列表为空，并拦截首页广告初始化/刷新接口，保留车票查询、下单和推送功能。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/%E9%93%81%E8%B7%AF12306%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA.lpx) | 独立插件。 |
 | 淘宝闲鱼开屏广告拦截 | 拦截淘宝多广告接口和闲鱼开屏广告接口，保留商品浏览、搜索和交易相关接口。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/%E6%B7%98%E5%AE%9D%E9%97%B2%E9%B1%BC%E5%BC%80%E5%B1%8F%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA.lpx) | 独立插件。 |
 | 淘宝天猫贷款活动清理 | 清理淘宝、天猫贷款、金融、活动弹窗、营销推送和浮层，保留购物、订单和支付相关接口。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/%E6%B7%98%E5%AE%9D%E5%A4%A9%E7%8C%AB%E8%B4%B7%E6%AC%BE%E6%B4%BB%E5%8A%A8%E6%B8%85%E7%90%86.lpx) | 增强版。 |
 | 腾讯广告SDK启动拦截 | 拦截腾讯广告 SDK 启动接口，作为多应用广告请求的补充拦截。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/%E8%85%BE%E8%AE%AF%E5%B9%BF%E5%91%8ASDK%E5%90%AF%E5%8A%A8%E6%8B%A6%E6%88%AA.lpx) | 补充规则。 |

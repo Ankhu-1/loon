@@ -1,17 +1,14 @@
 ﻿#!name=铁路12306广告拦截
-#!desc=拦截铁路 12306 首页广告初始化、运营广告类型和广告域名，保留车票查询、下单和推送功能。
+#!desc=秒回铁路 12306 开屏广告列表为空，并拦截首页广告初始化/刷新接口，保留车票查询、下单和推送功能。
 #!author=Codex
-#!date=2026-06-29
+#!date=2026-06-30
 
 [Script]
-# The capture showed the existing 12306 ad plugin returning 404 only for these two operation-types:
-# com.cars.otsmobile.newHomePage.initData
-# com.cars.otsmobile.newHomePageBussData
-http-response ^https:\/\/mobile\.12306\.cn\/otsmobile\/app\/mgs\/mgw\.htm$ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/railway-12306-ad-block.js, requires-body=true, timeout=10, tag=铁路12306广告拦截
+http-request ^https?:\/\/ad\.12306\.cn\/ad\/ser\/getAdList(?:\?|$) script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/railway-12306-ad-block.js, requires-body=true, timeout=10, tag=铁路12306开屏广告空响应
+http-response ^https:\/\/mobile\.12306\.cn\/otsmobile\/app\/mgs\/mgw\.htm$ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/railway-12306-ad-block.js, requires-body=true, timeout=10, tag=铁路12306首页广告拦截
 
 [Rule]
-DOMAIN,ad.12306.cn,REJECT
+DOMAIN,ad.12306.cn,DIRECT
 
 [MITM]
-hostname = mobile.12306.cn
-
+hostname = mobile.12306.cn, ad.12306.cn
