@@ -1,0 +1,22 @@
+#!name=Discord消息翻译
+#!desc=给 Discord 消息列表追加中文译文。默认使用 Google Translate 公共接口，适用于能被 Loon MITM 到的 Discord 网页版或 App 消息接口。
+#!author=Codex
+#!homepage=https://github.com/Ankhu-1/loon
+#!date=2026-06-30
+#!icon=https://raw.githubusercontent.com/edent/SuperTinyIcons/master/images/svg/discord.svg
+
+[Argument]
+dt_enable = switch,true,tag=启用翻译,desc=关闭后不修改 Discord 消息
+dt_target = select,"简体中文","繁体中文","英文","日文","韩文",tag=目标语言,desc=选择要翻译成的语言
+dt_mode = select,"追加译文","替换原文",tag=显示方式,desc=建议使用追加译文，保留原始消息
+dt_max_count = input,"30",tag=每批最多翻译,desc=打开频道时最多翻译的消息数量，数字越大越慢
+dt_skip_same_lang = switch,true,tag=跳过同语言,desc=消息看起来已经是目标语言时不再翻译
+dt_translate_embeds = switch,true,tag=翻译嵌入内容,desc=翻译消息卡片中的标题和描述
+dt_debug = switch,false,tag=调试通知,desc=匹配接口时发送 Loon 通知
+
+[Script]
+http-response ^https?:\/\/(canary\.|ptb\.)?discord\.com\/api\/v\d+\/channels\/\d+\/messages(?:\/\d+)?(?:\?.*)?$ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/discord-translate/discord-translate-response.js,requires-body=1,max-size=0,argument=[{dt_enable},{dt_target},{dt_mode},{dt_max_count},{dt_skip_same_lang},{dt_translate_embeds},{dt_debug}],tag=Discord_频道消息翻译
+http-response ^https?:\/\/(canary\.|ptb\.)?discord\.com\/api\/v\d+\/guilds\/\d+\/messages\/search(?:\?.*)?$ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/discord-translate/discord-translate-response.js,requires-body=1,max-size=0,argument=[{dt_enable},{dt_target},{dt_mode},{dt_max_count},{dt_skip_same_lang},{dt_translate_embeds},{dt_debug}],tag=Discord_搜索消息翻译
+
+[MITM]
+hostname=discord.com,*.discord.com
