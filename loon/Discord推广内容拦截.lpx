@@ -1,0 +1,18 @@
+﻿#!name=Discord推广内容拦截
+#!desc=清理 Discord Nitro 推广、收藏品营销和任务广告决策返回，保留聊天、服务器和通知功能。
+#!author=Codex
+#!date=2026-06-29
+
+[Script]
+# Nitro/marketing promotions. The capture response contains marketing_components and x-discord-features: nitro-marketing.
+http-response ^https:\/\/discord\.com\/api\/v9\/promotions\? script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/discord-promotions-block.js, requires-body=true, timeout=10, tag=Discord推广内容拦截
+
+# Collectibles marketing card.
+http-response ^https:\/\/discord\.com\/api\/v9\/users\/@me\/collectibles-marketing\? script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/discord-promotions-block.js, requires-body=true, timeout=10, tag=Discord推广内容拦截
+
+# Quest ad decisions use client_ad_session_id in the capture. This does not touch normal channel/message APIs.
+http-response ^https:\/\/discord\.com\/api\/v9\/quests\/(?:decision|get-decisions)\? script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/discord-promotions-block.js, requires-body=true, timeout=10, tag=Discord推广内容拦截
+
+[MITM]
+hostname = discord.com
+

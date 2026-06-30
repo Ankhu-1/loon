@@ -1,0 +1,11 @@
+﻿#!name=Google本机转化广告上报拦截
+#!desc=拦截 Google 本机广告转化上报请求，减少网页和应用广告追踪。
+#!author=Codex
+#!date=2026-06-29
+
+[Rewrite]
+^https:\/\/www\.google\.com\/ads\/on-device\/conversions - reject-200
+
+[MITM]
+hostname = www.google.com
+

@@ -1,0 +1,11 @@
+﻿#!name=拼多多全局弹窗拦截
+#!desc=清空拼多多全局弹窗接口返回，尽量不影响商品、订单和支付功能。
+#!author=Codex
+#!date=2026-06-29
+
+[Script]
+http-response ^https:\/\/api\.pinduoduo\.com\/api\/aquarius\/hungary\/global\/app_popup script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/pdd-global-popup-block.js, requires-body=true, timeout=10, tag=拼多多全局弹窗拦截
+
+[MITM]
+hostname = api.pinduoduo.com
+

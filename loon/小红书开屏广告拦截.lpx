@@ -1,0 +1,36 @@
+﻿#!name=小红书开屏广告拦截
+#!desc=拦截小红书开屏、全屏广告资源，并清理开屏配置中的广告内容。
+#!author=Codex
+#!date=2026-06-29
+
+[Script]
+# Captured XHS splash config returns ads_groups with 1124x2436 opening-screen creatives.
+http-response ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v2\/system_service\/splash_config script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/xhs-open-ad-block.js, requires-body=true, timeout=10, tag=小红书开屏广告拦截
+http-response ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v2\/system_service\/splash_online_decision script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/xhs-open-ad-block.js, requires-body=true, timeout=10, tag=小红书开屏广告拦截
+http-response ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v2\/system_service\/splash_async_optimization script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/xhs-open-ad-block.js, requires-body=true, timeout=10, tag=小红书开屏广告拦截
+
+[Rule]
+# XHS ad image CDN variants. The capture used ads-img-bak.xhscdn.com.
+DOMAIN,ads-img-bak.xhscdn.com,REJECT
+DOMAIN,ads-img-qc.xhscdn.com,REJECT
+DOMAIN,ads-img-bd.xhscdn.com,REJECT
+DOMAIN,ads-img-hw.xhscdn.com,REJECT
+
+[Rewrite]
+# Captured full-screen brand ad page:
+# https://pages.xiaohongshu.com/newad/brand/...?...fullscreen=true&page_entrance_type=full_screen_ads_page
+^https:\/\/pages\.xiaohongshu\.com\/newad\/brand\/.* - reject
+
+# Captured ad landing/runtime bundle.
+^https:\/\/fe-static\.xhscdn\.com\/formula-static\/ad-printing\/.* - reject-200
+
+# Captured full-screen splash landing page.
+^https:\/\/fe\.xiaohongshu\.com\/ditto\/vincent\/.*[?&]source=splash(?:&.*)?$ - reject-200
+
+# Captured ad creatives:
+# https://ads-img-bak.xhscdn.com/magic-pocket/...jpg?imageView2/q/70/format/webp
+^https:\/\/ads-img-(?:bak|qc|bd|hw)\.xhscdn\.com\/magic-pocket\/.*\.(?:jpg|jpeg|png|webp)(?:\?.*)?$ - reject-img
+
+[MITM]
+hostname = edith.xiaohongshu.com, pages.xiaohongshu.com, fe.xiaohongshu.com, fe-static.xhscdn.com, ads-img-bak.xhscdn.com, ads-img-qc.xhscdn.com, ads-img-bd.xhscdn.com, ads-img-hw.xhscdn.com
+

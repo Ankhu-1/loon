@@ -1,0 +1,33 @@
+﻿#!name=QQ聊天核心精简
+#!desc=保留 QQ 原本聊天功能，拦截 QQ 空间广告、访客装饰物料、会员装扮补丁和游戏中心物料。
+#!author=Codex
+#!date=2026-06-29
+
+[Script]
+# Qzone TianShu ad slots. Keeps the original JSON shape and clears only ad lists.
+http-response ^https:\/\/h5\.qzone\.qq\.com\/http2rpc\/gotrpc\/TianShu\.Access\/GetAds\? script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/qq-chat-clean-block.js, requires-body=true, timeout=10, tag=QQ聊天核心精简
+
+# Qzone visitor decoration. Returns an empty decoration map so basic pages/chat remain untouched.
+http-response ^https:\/\/h5\.qzone\.qq\.com\/webapp\/json\/qzoneVisitorMaterial\/getVisitorDecoration\? script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/qq-chat-clean-block.js, requires-body=true, timeout=10, tag=QQ聊天核心精简
+
+[Rewrite]
+# QQ ad/report endpoints observed in the capture. sdkquic.e.qq.com/launch is already covered by tencent-ad-sdk-launch-block.lpx, so it is not duplicated here.
+^https:\/\/sdkreport\.e\.qq\.com\/monitor_report - reject-200
+^https:\/\/report\.qqweb\.qq\.com\/report\/007\?.*TianShu\.Access.*GetAds - reject-200
+
+# Qzone decorative packages: visitor skins, custom praise effects, custom fonts, facades, avatars, and VIP icons.
+^https:\/\/qzonestyle\.gtimg\.cn\/qzone\/space_item\/(?:material|facade|avatar)\/.* - reject-200
+^https:\/\/qzonestyle\.gtimg\.cn\/(?:aoi\/qz-vip-icon-ext\.css|touch\/components\/css\/sprite\/vip-icons-[^?]+|touch\/components\/css\/m-vip-tips\.css|touch\/proj-qzone\/img\/visitor\/visitor-trace-banner@2x\.jpg|touch\/proj-qzone\/fonts\/DIN\.(?:ttf|woff)) - reject-200
+
+# QQ VIP decoration/material hot patches.
+^https:\/\/gxh\.material\.qq\.com\/reshub\/mobile_qq_ios\/vas_qqvip_.* - reject-200
+
+# QQ Game Center material and related non-chat resources.
+^https:\/\/img\.gamecenter\.qq\.com\/(?:oasis|gc_img)\/.* - reject-img
+^https:\/\/static\.mie\.qq\.com\/xgame\/.* - reject-200
+^https:\/\/static\.mie\.qq\.com\/common\/lib\/zero\/idip\/.* - reject-200
+^https:\/\/(?:ssr|trpc)\.gamecenter\.qq\.com\/.*(?:QQGameCenter|game-detail|source_page=QQGameCenter).* - reject-200
+
+[MITM]
+hostname = h5.qzone.qq.com, sdkreport.e.qq.com, report.qqweb.qq.com, qzonestyle.gtimg.cn, gxh.material.qq.com, img.gamecenter.qq.com, static.mie.qq.com, ssr.gamecenter.qq.com, trpc.gamecenter.qq.com
+

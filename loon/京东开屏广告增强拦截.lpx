@@ -1,0 +1,16 @@
+﻿#!name=京东开屏广告增强拦截
+#!desc=拦截京东开屏图片素材，并下调启动广告和基础配置中的广告开关。
+#!author=Codex
+#!date=2026-06-29
+
+[Rewrite]
+# Captured JD opening-screen asset example:
+# https://m.360buyimg.com/mobilecms/s1125x2436_jfs/...jpg.avif
+^https:\/\/m(?:\d+)?\.360buyimg\.com\/mobilecms\/s(?:828|1125|1170|1242|1284|1290)x(?:1792|2208|2436|2532|2556|2622|2688|2778|2796)_jfs\/.*\.(?:jpg|jpeg|png|webp|avif)(?:!.*)?$ - reject-img
+
+[Script]
+http-response ^https:\/\/api\.m\.jd\.com\/client\.action\?(?=.*functionId=(?:basicConfig|strategy)).* script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/jd-open-ad-block.js, requires-body=true, timeout=10, tag=京东开屏广告增强拦截
+
+[MITM]
+hostname = api.m.jd.com, m.360buyimg.com, m15.360buyimg.com
+

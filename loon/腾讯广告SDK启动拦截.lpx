@@ -1,0 +1,11 @@
+﻿#!name=腾讯广告SDK启动拦截
+#!desc=拦截腾讯广告 SDK 启动接口，作为多应用广告请求的补充拦截。
+#!author=Codex
+#!date=2026-06-29
+
+[Rewrite]
+^https:\/\/sdkquic\.e\.qq\.com\/launch - reject-200
+
+[MITM]
+hostname = sdkquic.e.qq.com
+

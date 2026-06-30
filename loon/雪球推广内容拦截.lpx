@@ -1,0 +1,16 @@
+﻿#!name=雪球推广内容拦截
+#!desc=清理雪球远程推广配置和推广曝光上报，不影响行情、资讯、社区和交易相关接口。
+#!author=Codex
+#!date=2026-06-29
+
+[Script]
+# Remote config entries observed with broker/open-account promotion, community ad download message, homepage big picture ad, and stock_page_etf_ad.
+http-response ^https:\/\/open\.xueqiu\.com\/mpaas\/config\/content\? script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/xueqiu-promotion-block.js, requires-body=true, timeout=10, tag=雪球推广内容拦截
+
+[Rewrite]
+# Promotion exposure log. The content ad request api.xueqiu.com/promotion/display_ad_batch is already handled by the existing rules, so this plugin does not duplicate it.
+^https:\/\/promo\.xueqiu\.com\/promotion\/show_log\.json\? - reject-200
+
+[MITM]
+hostname = open.xueqiu.com, promo.xueqiu.com
+

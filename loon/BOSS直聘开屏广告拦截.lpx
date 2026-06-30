@@ -1,0 +1,11 @@
+﻿#!name=BOSS直聘开屏广告拦截
+#!desc=拦截 BOSS 直聘启动广告接口，保留职位搜索、聊天和投递相关功能。
+#!author=Codex
+#!date=2026-06-30
+
+[Rewrite]
+^https?:\/\/api-ios\.zhipin\.com\/api\/zpCommon\/user\/startupAd - reject-200
+
+[MITM]
+hostname = api-ios.zhipin.com
+

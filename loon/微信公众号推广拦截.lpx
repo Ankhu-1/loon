@@ -1,0 +1,12 @@
+﻿#!name=微信公众号推广拦截
+#!desc=拦截微信公众平台本地生活推广页面请求，保留微信聊天和公众号基础阅读功能。
+#!author=Codex
+#!date=2026-06-30
+
+[Rewrite]
+^https?:\/\/mp\.weixin\.qq\.com\/promotion\/res\/htmledition\/mobile\/html\/(?:local_business|feedback)\.html - reject-200
+^https?:\/\/mp\.weixin\.qq\.com\/promotion\/res\/htmledition\/mobile\/js\/local_business\/main\.[a-f0-9]+\.js - reject-200
+
+[MITM]
+hostname = mp.weixin.qq.com
+

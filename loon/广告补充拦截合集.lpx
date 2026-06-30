@@ -1,0 +1,23 @@
+﻿#!name=广告补充拦截合集
+#!desc=补充拦截 B 站品牌开屏、高德开屏、拼多多弹窗、Google 转化上报和腾讯广告 SDK 启动请求，不包含 moomoo/Futu。
+#!author=Codex
+#!date=2026-06-29
+
+[Script]
+# Bilibili brand opening-screen list leaked in the capture.
+http-response ^https:\/\/app\.bilibili\.com\/x\/v2\/splash\/brand\/list script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/ad-supplement-block.js, requires-body=true, timeout=10, tag=广告补充拦截合集
+
+# Amap startup config is a large config response; only ad/opening-screen fields are changed by the script.
+http-response ^https:\/\/m5\.amap\.com\/ws\/shield\/dsp\/app\/startup\/init script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/ad-supplement-block.js, requires-body=true, timeout=10, tag=广告补充拦截合集
+
+# Pinduoduo global popup response is cleared while preserving a normal JSON shape.
+http-response ^https:\/\/api\.pinduoduo\.com\/api\/aquarius\/hungary\/global\/app_popup script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/ad-supplement-block.js, requires-body=true, timeout=10, tag=广告补充拦截合集
+
+[Rewrite]
+# These were not rewritten by the existing ad plugins in the capture.
+^https:\/\/www\.google\.com\/ads\/on-device\/conversions - reject-200
+^https:\/\/sdkquic\.e\.qq\.com\/launch - reject-200
+
+[MITM]
+hostname = app.bilibili.com, m5.amap.com, api.pinduoduo.com, www.google.com, sdkquic.e.qq.com
+

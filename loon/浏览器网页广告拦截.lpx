@@ -1,0 +1,69 @@
+﻿#!name=浏览器网页广告拦截
+#!desc=拦截浏览器网页中的常见广告、跟踪和弹窗资源，作为应用专用插件之外的网页补充规则。
+#!author=Codex
+#!date=2026-06-30
+#!openUrl=https://github.com/Cats-Team/AdRules
+
+[Rule]
+# Sources checked:
+# - https://github.com/Cats-Team/AdRules
+# - https://github.com/privacy-protection-tools/anti-AD
+# - https://github.com/blackmatrix7/ios_rule_script
+#
+# Browser ad networks / exchanges
+DOMAIN-SUFFIX,doubleclick.net,REJECT
+DOMAIN-SUFFIX,googlesyndication.com,REJECT
+DOMAIN-SUFFIX,googleadservices.com,REJECT
+DOMAIN-SUFFIX,googletagservices.com,REJECT
+DOMAIN-SUFFIX,2mdn.net,REJECT
+DOMAIN-SUFFIX,adnxs.com,REJECT
+DOMAIN-SUFFIX,adsrvr.org,REJECT
+DOMAIN-SUFFIX,criteo.com,REJECT
+DOMAIN-SUFFIX,criteo.net,REJECT
+DOMAIN-SUFFIX,outbrain.com,REJECT
+DOMAIN-SUFFIX,outbrainimg.com,REJECT
+DOMAIN-SUFFIX,taboola.com,REJECT
+DOMAIN-SUFFIX,taboolasyndication.com,REJECT
+DOMAIN-SUFFIX,scorecardresearch.com,REJECT
+DOMAIN-SUFFIX,quantserve.com,REJECT
+DOMAIN-SUFFIX,ads-twitter.com,REJECT
+DOMAIN-SUFFIX,ads.linkedin.com,REJECT
+DOMAIN-SUFFIX,ads.yahoo.com,REJECT
+DOMAIN-SUFFIX,advertising.com,REJECT
+DOMAIN-SUFFIX,smartadserver.com,REJECT
+DOMAIN-SUFFIX,rubiconproject.com,REJECT
+DOMAIN-SUFFIX,pubmatic.com,REJECT
+DOMAIN-SUFFIX,openx.net,REJECT
+
+# Mainland China web ad platforms
+DOMAIN-SUFFIX,cpro.baidu.com,REJECT
+DOMAIN-SUFFIX,pos.baidu.com,REJECT
+DOMAIN-SUFFIX,afd.baidu.com,REJECT
+DOMAIN-SUFFIX,union.baidu.com,REJECT
+DOMAIN-SUFFIX,e.qq.com,REJECT
+DOMAIN-SUFFIX,gdt.qq.com,REJECT
+DOMAIN-SUFFIX,qzs.gdtimg.com,REJECT
+DOMAIN-SUFFIX,tanx.com,REJECT
+DOMAIN-SUFFIX,alimama.com,REJECT
+DOMAIN-SUFFIX,alimama.cn,REJECT
+DOMAIN-SUFFIX,alimama.alicdn.com,REJECT
+DOMAIN-SUFFIX,ad.toutiao.com,REJECT
+DOMAIN-SUFFIX,ad.bytedance.com,REJECT
+
+[Rewrite]
+# Google web display/video ads and conversion beacons.
+^https?:\/\/(?:pagead2\.googlesyndication\.com|securepubads\.g\.doubleclick\.net|googleads\.g\.doubleclick\.net)\/.* - reject-200
+^https?:\/\/[^\/]+\.doubleclick\.net\/(?:gampad\/ads|pagead\/|pcs\/view|ddm\/).* - reject-200
+^https?:\/\/www\.google\.[^\/]+\/(?:pagead\/|aclk).* - reject-200
+
+# Baidu / Tencent web ad endpoints.
+^https?:\/\/(?:cpro|pos|afd)\.baidu\.com\/.* - reject-200
+^https?:\/\/(?:e|gdt)\.qq\.com\/.* - reject-200
+^https?:\/\/qzs\.gdtimg\.com\/.* - reject-200
+
+# YouTube/Google promo artwork shown in browsers; image reject avoids blank HTML failures.
+^https?:\/\/www\.gstatic\.com\/youtube\/img\/promos\/growth\/.* - reject-img
+
+[MITM]
+hostname = pagead2.googlesyndication.com, securepubads.g.doubleclick.net, googleads.g.doubleclick.net, *.doubleclick.net, www.google.com, www.google.com.hk, cpro.baidu.com, pos.baidu.com, afd.baidu.com, e.qq.com, gdt.qq.com, qzs.gdtimg.com, www.gstatic.com
+

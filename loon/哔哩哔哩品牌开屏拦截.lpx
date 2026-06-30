@@ -1,0 +1,11 @@
+﻿#!name=哔哩哔哩品牌开屏拦截
+#!desc=拦截哔哩哔哩品牌开屏广告列表，不改动正常视频、动态和直播接口。
+#!author=Codex
+#!date=2026-06-29
+
+[Script]
+http-response ^https:\/\/app\.bilibili\.com\/x\/v2\/splash\/brand\/list script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/bilibili-brand-splash-block.js, requires-body=true, timeout=10, tag=哔哩哔哩品牌开屏拦截
+
+[MITM]
+hostname = app.bilibili.com
+

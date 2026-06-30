@@ -1,0 +1,11 @@
+﻿#!name=掌上生活广告预缓存拦截
+#!desc=拦截掌上生活广告预缓存接口，保留登录、账单、支付和基础服务接口。
+#!author=Codex
+#!date=2026-06-30
+
+[Rewrite]
+^https?:\/\/mbasecc\.bcs\.cmbchina\.com\/Edge\/api\/mlife\.clientface\.clientservice\.api\.advertiseService\/preCacheAdvertiseSec - reject-200
+
+[MITM]
+hostname = mbasecc.bcs.cmbchina.com
+

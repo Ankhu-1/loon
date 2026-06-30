@@ -1,0 +1,13 @@
+﻿#!name=京东开屏素材拦截
+#!desc=拦截抓包中发现的京东 iOS 开屏竖图素材，不使用脚本。
+#!author=Codex
+#!date=2026-06-29
+
+[Rewrite]
+# Captured JD opening-screen asset example:
+# https://m.360buyimg.com/mobilecms/s1125x2436_jfs/...jpg.avif
+^https:\/\/m(?:\d+)?\.360buyimg\.com\/mobilecms\/s(?:828|1125|1170|1242|1284|1290)x(?:1792|2208|2436|2532|2556|2622|2688|2778|2796)_jfs\/.*\.(?:jpg|jpeg|png|webp|avif)(?:!.*)?$ - reject-img
+
+[MITM]
+hostname = m.360buyimg.com, m15.360buyimg.com
+

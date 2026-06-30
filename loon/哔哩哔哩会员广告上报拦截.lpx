@@ -1,0 +1,11 @@
+﻿#!name=哔哩哔哩会员广告上报拦截
+#!desc=拦截哔哩哔哩会员广告物料上报接口，作为现有 B 站去广告规则的补充。
+#!author=Codex
+#!date=2026-06-30
+
+[Rewrite]
+^https?:\/\/api\.bilibili\.com\/x\/vip\/ads\/material\/report - reject-200
+
+[MITM]
+hostname = api.bilibili.com
+

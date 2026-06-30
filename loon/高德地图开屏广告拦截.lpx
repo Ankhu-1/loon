@@ -1,0 +1,11 @@
+﻿#!name=高德地图开屏广告拦截
+#!desc=拦截高德地图启动开屏广告配置，尽量不影响地图、定位、搜索和导航功能。
+#!author=Codex
+#!date=2026-06-29
+
+[Script]
+http-response ^https:\/\/m5\.amap\.com\/ws\/shield\/dsp\/app\/startup\/init script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/amap-startup-ad-block.js, requires-body=true, timeout=10, tag=高德地图开屏广告拦截
+
+[MITM]
+hostname = m5.amap.com
+

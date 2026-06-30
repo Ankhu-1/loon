@@ -1,0 +1,21 @@
+﻿#!name=Investing广告清理
+#!desc=清理 Investing 应用促销横幅、广告位配置、Outbrain 信息流广告和 VAST 广告链接，不处理 moomoo/Futu。
+#!author=Codex
+#!date=2026-06-29
+
+[Script]
+# Investing Pro promo banners shown in Markets/News/Watchlist/Side Menu.
+http-response ^https:\/\/endpoints\.investing\.com\/content-mobile\/v2\/banner\? script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/investing-ad-block.js, requires-body=true, timeout=10, tag=Investing广告清理
+
+# Google Ad Manager unit ids used by the app. The script keeps the JSON shape and blanks only ad id values.
+http-response ^https:\/\/endpoints\.investing\.com\/mobile-settings\/v1\/ad-units-ids\? script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/investing-ad-block.js, requires-body=true, timeout=10, tag=Investing广告清理
+
+# News/content screens may include VAST ad URLs inside normal content responses.
+http-response ^https:\/\/iappapi\.investing\.com\/get_screen\.php\? script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/investing-ad-block.js, requires-body=true, timeout=10, tag=Investing广告清理
+
+# Outbrain recommendation feed returned paid/sponsored cards in the capture.
+http-response ^https:\/\/mv\.outbrain\.com\/Multivac\/api\/get\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/investing-ad-block.js, requires-body=true, timeout=10, tag=Investing广告清理
+
+[MITM]
+hostname = endpoints.investing.com, iappapi.investing.com, mv.outbrain.com
+

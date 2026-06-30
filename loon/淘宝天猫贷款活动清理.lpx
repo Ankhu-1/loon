@@ -1,0 +1,19 @@
+﻿#!name=淘宝天猫贷款活动清理
+#!desc=清理淘宝、天猫贷款、金融、活动弹窗、营销推送和浮层，保留购物、订单和支付相关接口。
+#!author=Codex
+#!date=2026-06-30
+
+[Rewrite]
+# Direct H5 activity / finance landing pages. Keep this path-based to avoid blocking product/order APIs.
+^https?:\/\/(?:(?:market|h5)\.m\.taobao\.com|(?:www|m)\.taobao\.com|(?:pages|m)\.tmall\.com|(?:market|h5)\.m\.tmall\.com)\/.*(?:huabei|jiebei|loan|credit|finance|borrow|fenqi|activity|campaign|promotion|poplayer|popup|push) - reject-200
+
+[Script]
+# Taobao/Tmall mtop activity, marketing, finance, poplayer, and advertisement configuration.
+http-response ^https?:\/\/(?:acs|guide-acs|rhdc-acs)\.m\.(?:taobao|tmall)\.com\/gw\/.*(?:advertisement|activity|campaign|promotion|marketing|poplayer|popup|float|loan|credit|finance|huabei|jiebei|borrow|fenqi).* script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/taobao-tmall-loan-activity-clean.js, requires-body=true, timeout=10, tag=淘宝天猫贷款活动清理
+
+# Alibaba PopLayer templates used by activity/promotion floating pages.
+http-response ^https?:\/\/poplayer\.template\.alibaba\.com\/.*\.json script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/taobao-tmall-loan-activity-clean.js, requires-body=true, timeout=10, tag=淘宝天猫贷款活动清理
+
+[MITM]
+hostname = acs.m.taobao.com, guide-acs.m.taobao.com, rhdc-acs.m.taobao.com, acs.m.tmall.com, guide-acs.m.tmall.com, rhdc-acs.m.tmall.com, poplayer.template.alibaba.com, market.m.taobao.com, h5.m.taobao.com, www.taobao.com, m.taobao.com, pages.tmall.com, m.tmall.com, market.m.tmall.com, h5.m.tmall.com
+
