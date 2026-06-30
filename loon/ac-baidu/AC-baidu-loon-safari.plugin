@@ -1,0 +1,23 @@
+#!name=AC-baidu Safari Lite
+#!desc=Safari-first lightweight AC-baidu plugin. Directly injects CSS/JS for ads hiding, favicon and layout. Turn ac_debug on to see a page badge when matched.
+#!author=AC / Codex
+#!homepage=https://github.com/langren1353/GM_script
+#!date=2026-06-30
+#!icon=https://ae01.alicdn.com/kf/Hac1a58055c5047cdb91349e91aa208d5k.jpg
+#!select = ac_layout,two,center,left,three,four,off
+#!select = ac_ads,on,off
+#!select = ac_redirect,on,off
+#!select = ac_favicon,on,off
+#!select = ac_debug,off,on
+
+[Script]
+http-response ^https?:\/\/(ipv6|www|www1|m|xueshu)\.baidu\.com\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,tag=ACBaiduLite_Baidu
+http-response ^https?:\/\/www\.so\.com\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,tag=ACBaiduLite_Haosou
+http-response ^https?:\/\/([^\/]+\.)?bing\.com\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,tag=ACBaiduLite_Bing
+http-response ^https?:\/\/encrypted\.google\.[^\/]+\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,tag=ACBaiduLite_GoogleEncrypted
+http-response ^https?:\/\/([^\/]+\.)?google\.[^\/]+\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,tag=ACBaiduLite_Google
+http-response ^https?:\/\/([^\/]+\.)?duckduckgo\.com\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,tag=ACBaiduLite_DuckDuckGo
+http-response ^https?:\/\/([^\/]+\.)?dogedoge\.com\/ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/ac-baidu/AC-baidu-loon-safari-response.js,requires-body=1,max-size=0,tag=ACBaiduLite_DogeDoge
+
+[MITM]
+hostname=ipv6.baidu.com,www.baidu.com,www1.baidu.com,m.baidu.com,xueshu.baidu.com,www.so.com,bing.com,*.bing.com,encrypted.google.com,google.com,*.google.com,google.com.hk,*.google.com.hk,google.com.jp,*.google.com.jp,google.com.tw,*.google.com.tw,google.co.jp,*.google.co.jp,google.co.uk,*.google.co.uk,duckduckgo.com,*.duckduckgo.com,dogedoge.com,*.dogedoge.com
