@@ -1,0 +1,25 @@
+#!name=Discord配置探测
+#!desc=探测 Discord App 下发的实验和设置接口，查找 bubble、chat、message、layout、mobile 等可能影响原生聊天界面的配置。不修改接口返回。
+#!author=Codex
+#!homepage=https://github.com/Ankhu-1/loon
+#!date=2026-06-30
+#!icon=https://raw.githubusercontent.com/edent/SuperTinyIcons/master/images/svg/discord.svg
+
+[Argument]
+dp_enable = switch,true,tag=启用探测,desc=关闭后不记录任何内容
+dp_keywords = input,"bubble,chat,message,layout,mobile,visual,refresh,wallpaper,experiment,tabs",tag=关键词,desc=逗号分隔，命中后在日志和通知里显示
+dp_notify_hits = switch,true,tag=命中通知,desc=发现关键词时发送 Loon 通知
+dp_log_all = switch,false,tag=记录未命中接口,desc=开启后所有探测到的配置接口都会写入日志，可能比较吵
+dp_max_hits = input,"12",tag=最多显示命中,desc=每个接口最多输出的命中条数
+
+[Script]
+http-response ^https?:\/\/(canary\.|ptb\.)?discord\.com\/api\/v\d+\/experiments(?:\?.*)?$ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/discord-config-probe/discord-config-probe.js,requires-body=1,max-size=0,argument=[{dp_enable},{dp_keywords},{dp_notify_hits},{dp_log_all},{dp_max_hits}],tag=Discord配置探测_Experiments
+http-response ^https?:\/\/(canary\.|ptb\.)?discord\.com\/api\/v\d+\/apex\/experiments(?:\?.*)?$ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/discord-config-probe/discord-config-probe.js,requires-body=1,max-size=0,argument=[{dp_enable},{dp_keywords},{dp_notify_hits},{dp_log_all},{dp_max_hits}],tag=Discord配置探测_ApexExperiments
+http-response ^https?:\/\/(canary\.|ptb\.)?discord\.com\/api\/v\d+\/users\/@me\/experiments(?:\?.*)?$ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/discord-config-probe/discord-config-probe.js,requires-body=1,max-size=0,argument=[{dp_enable},{dp_keywords},{dp_notify_hits},{dp_log_all},{dp_max_hits}],tag=Discord配置探测_UserExperiments
+http-response ^https?:\/\/(canary\.|ptb\.)?discord\.com\/api\/v\d+\/users\/@me\/settings(?:\?.*)?$ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/discord-config-probe/discord-config-probe.js,requires-body=1,max-size=0,argument=[{dp_enable},{dp_keywords},{dp_notify_hits},{dp_log_all},{dp_max_hits}],tag=Discord配置探测_Settings
+http-response ^https?:\/\/(canary\.|ptb\.)?discord\.com\/api\/v\d+\/users\/@me\/settings-proto\/[^\/\?]+(?:\?.*)?$ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/discord-config-probe/discord-config-probe.js,requires-body=1,max-size=0,argument=[{dp_enable},{dp_keywords},{dp_notify_hits},{dp_log_all},{dp_max_hits}],tag=Discord配置探测_SettingsProto
+http-response ^https?:\/\/(canary\.|ptb\.)?discord\.com\/api\/v\d+\/users\/@me\/guilds\/settings(?:\?.*)?$ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/discord-config-probe/discord-config-probe.js,requires-body=1,max-size=0,argument=[{dp_enable},{dp_keywords},{dp_notify_hits},{dp_log_all},{dp_max_hits}],tag=Discord配置探测_GuildSettingsBulk
+http-response ^https?:\/\/(canary\.|ptb\.)?discord\.com\/api\/v\d+\/users\/@me\/guilds\/\d+\/settings(?:\?.*)?$ script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/discord-config-probe/discord-config-probe.js,requires-body=1,max-size=0,argument=[{dp_enable},{dp_keywords},{dp_notify_hits},{dp_log_all},{dp_max_hits}],tag=Discord配置探测_GuildSettings
+
+[MITM]
+hostname=discord.com,*.discord.com

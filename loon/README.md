@@ -21,6 +21,7 @@
 | 浏览器网页广告拦截 | 拦截浏览器网页中的常见广告、跟踪和弹窗资源，作为应用专用插件之外的网页补充规则。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BD%91%E9%A1%B5%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA.lpx) | 网页通用规则。 |
 | 掌上生活广告预缓存拦截 | 拦截掌上生活广告预缓存接口，保留登录、账单、支付和基础服务接口。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/%E6%8E%8C%E4%B8%8A%E7%94%9F%E6%B4%BB%E5%B9%BF%E5%91%8A%E9%A2%84%E7%BC%93%E5%AD%98%E6%8B%A6%E6%88%AA.lpx) | 独立插件。 |
 | Discord推广内容拦截 | 清理 Discord Nitro 推广、收藏品营销和任务广告决策返回，保留聊天、服务器和通知功能。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/Discord%E6%8E%A8%E5%B9%BF%E5%86%85%E5%AE%B9%E6%8B%A6%E6%88%AA.lpx) | 独立插件。 |
+| Discord配置探测 | 探测 Discord App 下发的实验和设置接口，查找可能影响原生聊天布局的服务端开关。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/discord-config-probe/Discord-config-probe.plugin) | 调试用，不修改返回内容。 |
 | Discord消息翻译 | 给 Discord 消息列表追加译文，支持简体中文、繁体中文、英文、日文、韩文，可选择追加译文或替换原文。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/discord-translate/Discord-translate.plugin) | 需要 MITM；实时新消息可能不生效。 |
 | Google本机转化广告上报拦截 | 拦截 Google 本机广告转化上报请求，减少网页和应用广告追踪。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/Google%E6%9C%AC%E6%9C%BA%E8%BD%AC%E5%8C%96%E5%B9%BF%E5%91%8A%E4%B8%8A%E6%8A%A5%E6%8B%A6%E6%88%AA.lpx) | 补充规则。 |
 | Investing广告清理 | 清理 Investing 应用促销横幅、广告位配置、Outbrain 信息流广告和 VAST 广告链接，不处理 moomoo/Futu。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/Investing%E5%B9%BF%E5%91%8A%E6%B8%85%E7%90%86.lpx) | 独立插件。 |
