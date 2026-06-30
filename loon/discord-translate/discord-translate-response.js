@@ -5,12 +5,20 @@ const DT_TARGET_MAP = {
   "英文": "en",
   "日文": "ja",
   "韩文": "ko",
-  "zh": "zh-CN",
+  zh: "zh-CN",
   "zh-cn": "zh-CN",
   "zh-tw": "zh-TW",
-  "en": "en",
-  "ja": "ja",
-  "ko": "ko"
+  en: "en",
+  ja: "ja",
+  ko: "ko"
+};
+
+const DT_TARGET_NAME = {
+  "zh-CN": "简体中文",
+  "zh-TW": "繁体中文",
+  en: "English",
+  ja: "日本語",
+  ko: "한국어"
 };
 
 function dtArguments() {
@@ -58,9 +66,20 @@ function dtTarget(value) {
   return DT_TARGET_MAP[key] || DT_TARGET_MAP[key.toLowerCase()] || "zh-CN";
 }
 
+function dtProvider(value) {
+  const text = String(value == null ? "" : value).trim().toLowerCase();
+  if (text.includes("google")) return "google";
+  return "deepseek";
+}
+
 function dtOptions() {
+  const provider = dtProvider(dtRead("dt_provider", "DeepSeek API"));
+  const model = String(dtRead("dt_deepseek_model", "deepseek-v4-flash") || "deepseek-v4-flash").trim();
   return {
     enabled: dtBool(dtRead("dt_enable", true), true),
+    provider,
+    deepseekApiKey: String(dtRead("dt_deepseek_api_key", "") || "").trim(),
+    deepseekModel: model,
     target: dtTarget(dtRead("dt_target", "简体中文")),
     append: String(dtRead("dt_mode", "追加译文")) !== "替换原文",
     maxCount: dtNumber(dtRead("dt_max_count", "30"), 30, 1, 80),
@@ -89,19 +108,23 @@ function dtHash(text) {
   return Math.abs(hash).toString(36);
 }
 
-function dtCacheRead(target, text) {
+function dtCacheKey(namespace, text) {
+  return "discord_translate_" + namespace.replace(/[^\w.-]/g, "_") + "_" + dtHash(text);
+}
+
+function dtCacheRead(namespace, text) {
   try {
     if (typeof $persistentStore === "undefined" || !$persistentStore.read) return "";
-    return $persistentStore.read("discord_translate_" + target + "_" + dtHash(text)) || "";
+    return $persistentStore.read(dtCacheKey(namespace, text)) || "";
   } catch (error) {
     return "";
   }
 }
 
-function dtCacheWrite(target, text, translated) {
+function dtCacheWrite(namespace, text, translated) {
   try {
     if (typeof $persistentStore !== "undefined" && $persistentStore.write) {
-      $persistentStore.write(translated, "discord_translate_" + target + "_" + dtHash(text));
+      $persistentStore.write(translated, dtCacheKey(namespace, text));
     }
   } catch (error) {}
 }
@@ -150,7 +173,8 @@ function dtApplyText(original, translated, options) {
 }
 
 function dtTranslateByGoogle(text, target) {
-  const cached = dtCacheRead(target, text);
+  const namespace = "google:" + target;
+  const cached = dtCacheRead(namespace, text);
   if (cached) return Promise.resolve(cached);
   const clipped = String(text).slice(0, 1800);
   const url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=" +
@@ -160,7 +184,7 @@ function dtTranslateByGoogle(text, target) {
       $httpClient.get({
         url,
         headers: {
-          "Accept": "application/json,text/plain,*/*",
+          Accept: "application/json,text/plain,*/*",
           "User-Agent": "Mozilla/5.0"
         }
       }, (error, response, body) => {
@@ -171,7 +195,7 @@ function dtTranslateByGoogle(text, target) {
         try {
           const json = JSON.parse(body);
           const translated = Array.isArray(json[0]) ? json[0].map((part) => part && part[0] || "").join("").trim() : "";
-          if (translated) dtCacheWrite(target, text, translated);
+          if (translated) dtCacheWrite(namespace, text, translated);
           resolve(translated);
         } catch (parseError) {
           resolve("");
@@ -181,6 +205,67 @@ function dtTranslateByGoogle(text, target) {
       resolve("");
     }
   });
+}
+
+function dtTranslateByDeepSeek(text, options) {
+  if (!options.deepseekApiKey) return Promise.resolve("");
+  const namespace = "deepseek:" + options.deepseekModel + ":" + options.target;
+  const cached = dtCacheRead(namespace, text);
+  if (cached) return Promise.resolve(cached);
+  const targetName = DT_TARGET_NAME[options.target] || options.target;
+  const clipped = String(text).slice(0, 4000);
+  const payload = {
+    model: options.deepseekModel || "deepseek-v4-flash",
+    messages: [
+      {
+        role: "system",
+        content: [
+          "You are a translation engine.",
+          "Translate the user's Discord message into " + targetName + ".",
+          "Preserve Markdown, URLs, emojis, mentions such as <@123>, channel references, and code blocks.",
+          "Return only the translated text. Do not explain."
+        ].join(" ")
+      },
+      { role: "user", content: clipped }
+    ],
+    stream: false,
+    thinking: { type: "disabled" },
+    temperature: 0.2
+  };
+  return new Promise((resolve) => {
+    try {
+      $httpClient.post({
+        url: "https://api.deepseek.com/chat/completions",
+        headers: {
+          Authorization: "Bearer " + options.deepseekApiKey,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(payload)
+      }, (error, response, body) => {
+        if (error || !body) {
+          resolve("");
+          return;
+        }
+        try {
+          const json = JSON.parse(body);
+          const translated = json && json.choices && json.choices[0] &&
+            json.choices[0].message && String(json.choices[0].message.content || "").trim();
+          if (translated) dtCacheWrite(namespace, text, translated);
+          resolve(translated || "");
+        } catch (parseError) {
+          resolve("");
+        }
+      });
+    } catch (error) {
+      resolve("");
+    }
+  });
+}
+
+function dtTranslate(text, options) {
+  if (options.provider === "google") return dtTranslateByGoogle(text, options.target);
+  return dtTranslateByDeepSeek(text, options);
 }
 
 function dtIsMessage(value) {
@@ -250,18 +335,24 @@ try {
   const body = $response && typeof $response.body === "string" ? $response.body : "";
   if (!options.enabled || !body) {
     dtFinish({});
+  } else if (options.provider === "deepseek" && !options.deepseekApiKey) {
+    if (options.debug && typeof $notification !== "undefined") {
+      $notification.post("Discord消息翻译", "缺少 DeepSeek API Key", "请在插件设置里本地填写 dt_deepseek_api_key");
+    }
+    dtFinish({});
   } else {
     const json = JSON.parse(body);
     const jobs = dtCollectJobs(json, options);
     if (!jobs.length) {
       dtFinish({});
     } else {
-      dtRunLimited(jobs, 4, async (job) => {
-        const translated = await dtTranslateByGoogle(job.text, options.target);
+      dtRunLimited(jobs, 3, async (job) => {
+        const translated = await dtTranslate(job.text, options);
         if (translated) job.owner[job.key] = dtApplyText(job.text, translated, options);
       }).then(() => {
         if (options.debug && typeof $notification !== "undefined") {
-          $notification.post("Discord消息翻译", "已处理 " + jobs.length + " 条内容", $request && $request.url || "");
+          const providerName = options.provider === "deepseek" ? "DeepSeek" : "Google";
+          $notification.post("Discord消息翻译", providerName + " 已处理 " + jobs.length + " 条内容", $request && $request.url || "");
         }
         dtFinish({
           status: $response.status,
