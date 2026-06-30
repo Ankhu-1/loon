@@ -8,6 +8,12 @@
 https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/discord-translate/Discord-translate.plugin
 ```
 
+如果 GitHub raw 对旧文件名有缓存，可以使用 DeepSeek 专用新路径：
+
+```text
+https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/discord-translate/Discord-translate-deepseek.plugin
+```
+
 ## DeepSeek API Key
 
 仓库里不会保存你的 API Key。插件文件只提供一个空的本地输入项：
