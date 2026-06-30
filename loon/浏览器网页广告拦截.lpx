@@ -1,5 +1,6 @@
 ﻿#!name=浏览器网页广告拦截
 #!desc=拦截浏览器网页中的常见广告、跟踪和弹窗资源，作为应用专用插件之外的网页补充规则。
+#!icon=https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/23/4c/cb/234ccbb4-e65a-bb94-f877-3d230743e9e3/safari-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg
 #!author=Codex
 #!date=2026-06-30
 #!openUrl=https://github.com/Cats-Team/AdRules

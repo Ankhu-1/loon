@@ -13,7 +13,7 @@
 
 | 插件 | 说明 | 订阅链接 | 备注 |
 | --- | --- | --- | --- |
-| 高德地图核心精简 | 去除高德地图开屏、活动、会员、优惠券、任务、皮肤语音包和营销消息，保留地图、导航、搜索、路线、周边和天气。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BE%E6%A0%B8%E5%BF%83%E7%B2%BE%E7%AE%80.lpx) | 增强版，不建议与高德地图开屏广告拦截同时启用。 |
+| 高德地图核心精简 | 通过脚本清洗高德动态配置，去除开屏、活动、会员、优惠券、任务、皮肤语音包、打车提示和营销消息，保留地图、导航、搜索、路线、周边和天气。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BE%E6%A0%B8%E5%BF%83%E7%B2%BE%E7%AE%80.lpx) | 增强版，不建议与高德地图开屏广告拦截同时启用。 |
 | 高德地图开屏广告拦截 | 拦截高德地图启动开屏广告配置，尽量不影响地图、定位、搜索和导航功能。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BE%E5%BC%80%E5%B1%8F%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA.lpx) | 轻量版，已被高德地图核心精简覆盖。 |
 | 哔哩哔哩品牌开屏拦截 | 拦截哔哩哔哩品牌开屏广告列表，不改动正常视频、动态和直播接口。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9%E5%93%81%E7%89%8C%E5%BC%80%E5%B1%8F%E6%8B%A6%E6%88%AA.lpx) | 单独开屏规则。 |
 | 哔哩哔哩会员广告上报拦截 | 拦截哔哩哔哩会员广告物料上报接口，作为现有 B 站去广告规则的补充。 | [Raw](https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9%E4%BC%9A%E5%91%98%E5%B9%BF%E5%91%8A%E4%B8%8A%E6%8A%A5%E6%8B%A6%E6%88%AA.lpx) | 补充上报规则。 |

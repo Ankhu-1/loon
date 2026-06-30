@@ -1,5 +1,6 @@
 ﻿#!name=Investing广告清理
 #!desc=清理 Investing 应用促销横幅、广告位配置、Outbrain 信息流广告和 VAST 广告链接，不处理 moomoo/Futu。
+#!icon=https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/a6/58/13/a658134e-f151-c0eb-7114-246259b39573/AppIcon-0-1x_U007emarketing-0-0-0-7-0-0-85-220.png/512x512bb.jpg
 #!author=Codex
 #!date=2026-06-29
 

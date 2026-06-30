@@ -1,5 +1,6 @@
 ﻿#!name=Google本机转化广告上报拦截
 #!desc=拦截 Google 本机广告转化上报请求，减少网页和应用广告追踪。
+#!icon=https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b5/3a/2b/b53a2b18-7238-0d30-3435-fc6471e1a34d/SuperG_ios26-0-0-1x_U007epad-0-0-0-1-0-0-sRGB-0-0-0-85-220.png/512x512bb.jpg
 #!author=Codex
 #!date=2026-06-29
 

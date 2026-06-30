@@ -1,5 +1,6 @@
 ﻿#!name=雪球推广内容拦截
 #!desc=清理雪球远程推广配置和推广曝光上报，不影响行情、资讯、社区和交易相关接口。
+#!icon=https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/7d/3d/b1/7d3db179-c739-cd77-89b2-81cbeda251f5/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg
 #!author=Codex
 #!date=2026-06-29
 

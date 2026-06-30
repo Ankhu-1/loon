@@ -1,5 +1,6 @@
 ﻿#!name=掌上生活广告预缓存拦截
 #!desc=拦截掌上生活广告预缓存接口，保留登录、账单、支付和基础服务接口。
+#!icon=https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/22/61/8f/22618f28-8b4b-6d5f-edb7-a5cd084dbf7f/AppIcon-0-0-1x_U007emarketing-0-7-0-sRGB-85-220.png/512x512bb.jpg
 #!author=Codex
 #!date=2026-06-30
 

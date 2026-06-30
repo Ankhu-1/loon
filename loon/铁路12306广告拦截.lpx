@@ -1,5 +1,6 @@
 ﻿#!name=铁路12306广告拦截
 #!desc=秒回铁路 12306 开屏广告列表为空，并拦截首页广告初始化/刷新接口，保留车票查询、下单和推送功能。
+#!icon=https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ad/05/62/ad056221-9f87-c034-ce27-00c21a921bf3/AppIcon-0-0-1x_U007epad-0-1-0-0-85-220.png/512x512bb.jpg
 #!author=Codex
 #!date=2026-06-30
 

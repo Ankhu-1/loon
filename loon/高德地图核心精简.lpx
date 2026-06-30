@@ -1,5 +1,6 @@
 ﻿#!name=高德地图核心精简
-#!desc=去除高德地图开屏、活动、会员、优惠券、任务、皮肤语音包和营销消息，保留地图、导航、搜索、路线、周边和天气。
+#!desc=去除高德地图开屏、活动、会员、优惠券、任务、皮肤语音包、打车提示和营销消息，保留地图、导航、搜索、路线、周边和天气。
+#!icon=https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/db/ae/3a/dbae3a53-830d-13b2-506e-1c38120750fb/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg
 #!author=Codex
 #!date=2026-06-30
 
@@ -10,31 +11,19 @@
 ^https?:\/\/optimus-ads\.amap\.com\/uploadimg\/[A-Za-z0-9]+\.gif - reject-200
 ^https?:\/\/render-oss-cdn\.amap\.com\/render\/studio-dev\/image\/ - reject-img
 
-# Main-page recommendations, AI quick suggestions, activity tasks, and non-core navigation-page assets.
-^https?:\/\/ai\.amap\.com\/v1\/ai_rec\/home_qs - reject-dict
-^https?:\/\/m5\.amap\.com\/ws\/promote\/main-page\/assets - reject-dict
+# Activity report and static decorative material.
 ^https?:\/\/m5\.amap\.com\/ws\/activity\/task\/reportData - reject-200
-^https?:\/\/m5\.amap\.com\/ws\/faas\/amap-navigation\/(?:main-page-assets|task-platform\/get-tasks) - reject-dict
-
-# Dynamic UI/config delivery that carries home cards, floating panels, scene recs, and extra feature entrances.
-^https?:\/\/m5\.amap\.com\/ws\/shield\/(?:scene\/recommend|frogserver\/(?:aocs\/updatable|rd\/displist)|nest\/updatable|h5\/updatable|performance\/updatable) - reject-dict
-^https?:\/\/m5\.amap\.com\/ws\/mapapi\/caini - reject-dict
-
-# Non-core personal/decoration/commercial entrances.
-^https?:\/\/m5\.amap\.com\/ws\/user\/(?:shopping_mall\/entrance\/tips|theme\/voice\/resource\/info|vassets\/) - reject-dict
-^https?:\/\/m5\.amap\.com\/ws\/aos\/personal\/ditigal\/using\/get - reject-dict
-^https?:\/\/m5\.amap\.com\/\/?ws\/group\/team\/user\/visibleStatus - reject-dict
-^https?:\/\/m5\.amap\.com\/ws\/work\/(?:group|together|travel)\/ - reject-dict
-
-# Marketing messages, coupons, VIP cards, and decorative material downloads.
-^https?:\/\/center\.amap\.com\/ws\/(?:message\/notice\/list|msgbox\/pull_mp|amc\/server\/conv\/raise_list|pb\/account\/check\/theme\/avatar) - reject-dict
-^https?:\/\/m5-zb\.amap\.com\/ws\/(?:ccoupon\/amap\/preload|vip\/jointly-channel|car\/user\/performance\/rules) - reject-dict
 ^https?:\/\/free-mapdownload\.autonavi\.com\/apps\/apps\/material\/.*\.(?:png|jpe?g|webp|gif|svga) - reject-img
 
 [Script]
-# Startup config is large; only open-screen fields are modified instead of rejecting the whole config.
-http-response ^https?:\/\/m5\.amap\.com\/ws\/shield\/dsp\/app\/startup\/init script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/amap-core-clean.js, requires-body=true, timeout=10, tag=高德地图核心精简
+# Dynamic UI/config responses are cleaned instead of rejected, so the app receives empty fresh config instead of falling back to cached buttons.
+http-response ^https?:\/\/m5\.amap\.com\/ws\/shield\/dsp\/app\/startup\/init script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/amap-core-clean.js, requires-body=true, timeout=10, tag=高德地图开屏配置清理
+http-response ^https?:\/\/m5\.amap\.com\/ws\/shield\/(?:frogserver\/(?:aocs\/updatable|rd\/displist)|scene\/recommend|nest\/updatable|h5\/updatable|performance\/updatable) script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/amap-core-clean.js, requires-body=true, timeout=10, tag=高德地图动态界面清理
+http-response ^https?:\/\/m5\.amap\.com\/ws\/(?:promote\/main-page\/assets|faas\/amap-navigation\/(?:main-page-assets|task-platform\/get-tasks)|mapapi\/caini|user\/(?:shopping_mall\/entrance\/tips|theme\/voice\/resource\/info|vassets\/)|aos\/personal\/ditigal\/using\/get|work\/(?:group|together|travel)\/|aos\/voice\/) script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/amap-core-clean.js, requires-body=true, timeout=10, tag=高德地图非核心入口清理
+http-response ^https?:\/\/m5\.amap\.com\/\/?ws\/group\/team\/user\/visibleStatus script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/amap-core-clean.js, requires-body=true, timeout=10, tag=高德地图组队入口清理
+http-response ^https?:\/\/ai\.amap\.com\/v1\/ai_rec\/home_qs script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/amap-core-clean.js, requires-body=true, timeout=10, tag=高德地图AI推荐清理
+http-response ^https?:\/\/center\.amap\.com\/ws\/(?:message\/notice\/list|msgbox\/pull_mp|amc\/server\/conv\/raise_list|pb\/account\/check\/theme\/avatar) script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/amap-core-clean.js, requires-body=true, timeout=10, tag=高德地图消息装饰清理
+http-response ^https?:\/\/m5-zb\.amap\.com\/ws\/(?:ccoupon\/amap\/preload|vip\/jointly-channel|car\/user\/performance\/rules) script-path=https://raw.githubusercontent.com/Ankhu-1/loon/main/loon/js/amap-core-clean.js, requires-body=true, timeout=10, tag=高德地图优惠会员清理
 
 [MITM]
 hostname = m5.amap.com, ai.amap.com, center.amap.com, m5-zb.amap.com, free-mapdownload.autonavi.com, amap-aos-info-nogw.amap.com, optimus-ads.amap.com, render-oss-cdn.amap.com
-

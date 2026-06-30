@@ -1,5 +1,6 @@
 ﻿#!name=高德地图开屏广告拦截
 #!desc=拦截高德地图启动开屏广告配置，尽量不影响地图、定位、搜索和导航功能。
+#!icon=https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/db/ae/3a/dbae3a53-830d-13b2-506e-1c38120750fb/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg
 #!author=Codex
 #!date=2026-06-29
 

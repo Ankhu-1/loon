@@ -1,5 +1,6 @@
 ﻿#!name=拼多多全局弹窗拦截
 #!desc=清空拼多多全局弹窗接口返回，尽量不影响商品、订单和支付功能。
+#!icon=https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/87/dd/0c/87dd0c98-32cb-3c31-2f86-4ed2e7be446d/AppIcon-1x_U007emarketing-0-8-0-0-0-85-220-0.png/512x512bb.jpg
 #!author=Codex
 #!date=2026-06-29
 
